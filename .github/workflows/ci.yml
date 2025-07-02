@@ -13,7 +13,7 @@ jobs:
         with:
           usesh: true
           prepare: |
-            pkg install -y curl
+            pkg install -y curl bash
           run: |
             # Enable Linux compatibility layer
             sysrc linux_enable="YES"
