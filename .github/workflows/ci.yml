@@ -28,3 +28,8 @@ jobs:
 
             ./bb --version
             ./bb -e "(println \"Hello from FreeBSD!\")"
+            ./bb -e '(fs/list-dir ".")'
+            realpath .
+            ./bb -e '(fs/real-path ".")'
+            ./bb -e '(spit "foo.txt" "hello")'
+            ./bb -e '(fs/list-dir ".")'
