@@ -20,7 +20,9 @@ jobs:
             service linux start
 
             # Download static Linux binary
-            bash <(curl https://raw.githubusercontent.com/babashka/babashka/master/install)
+            curl -sLO https://raw.githubusercontent.com/babashka/babashka/master/install
+            chmod +x ./install
+            ./install
 
             bb --version
             bb -e "(println \"Hello from FreeBSD!\")"
