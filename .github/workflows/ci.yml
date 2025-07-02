@@ -33,3 +33,6 @@ jobs:
             ./bb -e '(fs/real-path ".")'
             ./bb -e '(spit "foo.txt" "hello")'
             ./bb -e '(fs/list-dir ".")'
+            time ./bb -e ':ok'
+            time ./bb -e ':ok'
+            time ./bb -e ':ok'
