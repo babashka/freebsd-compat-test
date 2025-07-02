@@ -26,20 +26,5 @@ jobs:
             tar -xzf babashka-1.3.186-linux-amd64-static.tar.gz
             chmod +x bb
 
-            # Verify Linux compatibility is working
-            file bb
-            /compat/linux/bin/echo "Linux compat test" || echo "Linux compat needs setup"
-
-            # Test basic functionality
-            echo "Testing babashka..."
-            ./bb --version || echo "Direct execution failed, trying with explicit Linux emulation"
-
-            # If direct execution fails, try running through Linux emulation
-            if ! ./bb --version 2>/dev/null; then
-              echo "Trying alternative execution methods..."
-              /compat/linux/lib64/ld-linux-x86-64.so.2 ./bb --version || echo "Linux emulation execution failed"
-            fi
-
-            # Test basic functionality
             ./bb --version
             ./bb -e "(println \"Hello from FreeBSD!\")"
