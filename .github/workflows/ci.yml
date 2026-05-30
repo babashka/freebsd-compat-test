@@ -13,16 +13,14 @@ jobs:
         with:
           usesh: true
           prepare: |
-            pkg install -y curl bash
+            echo 'FreeBSD-ports: { url: "pkg+https://pkg.FreeBSD.org/${ABI}/latest", mirror_type: "srv", signature_type: "fingerprints", fingerprints: "/usr/share/keys/pkg", enabled: yes }' > /usr/local/etc/pkg/repos/FreeBSD.conf
+            kldload linux64.ko
+            pkg update
+            pkg install -y curl bash babashka
           run: |
             # Enable Linux compatibility layer
             sysrc linux_enable="YES"
             service linux start
-
-            # Download static Linux binary
-            curl -sLO https://raw.githubusercontent.com/babashka/babashka/master/install
-            chmod +x ./install
-            ./install
 
             bb --version
             bb -e "(println \"Hello from FreeBSD!\")"
@@ -30,7 +28,7 @@ jobs:
             realpath .
             bb -e '(fs/real-path ".")'
             bb -e '(spit "foo.txt" "hello")'
-            bb -e '(fs/list-dir ".")'
+            bb -e "(require '[babashka.pods :as pods]) (pods/load-pod 'org.babashka/go-sqlite3 \"0.3.9\") (require '[pod.babashka.go-sqlite3 :as sqlite]) (prn (sqlite/query \"/tmp/foo.db\" [\"select 1+1\"]))"           bb -e '(fs/list-dir ".")'
             time bb -e ':ok'
             time bb -e ':ok'
             time bb -e ':ok'
