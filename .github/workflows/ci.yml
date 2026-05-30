@@ -13,16 +13,14 @@ jobs:
         with:
           usesh: true
           prepare: |
-            pkg install -y curl bash
+            echo 'FreeBSD-ports: { url: "pkg+https://pkg.FreeBSD.org/${ABI}/latest", mirror_type: "srv", signature_type: "fingerprints", fingerprints: "/usr/share/keys/pkg", enabled: yes }' > /usr/local/etc/pkg/repos/FreeBSD.conf
+            kldload linux64.ko
+            pkg update
+            pkg install -y curl bash babashka
           run: |
             # Enable Linux compatibility layer
             sysrc linux_enable="YES"
             service linux start
-
-            # Download static Linux binary
-            curl -sLO https://raw.githubusercontent.com/babashka/babashka/master/install
-            chmod +x ./install
-            ./install
 
             bb --version
             bb -e "(println \"Hello from FreeBSD!\")"
