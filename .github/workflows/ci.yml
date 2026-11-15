@@ -23,6 +23,7 @@ jobs:
             service linux start
 
             bb --version
+            file "$(which bb)"
             bb -e "(println \"Hello from FreeBSD!\")"
             bb -e '(fs/list-dir ".")'
             realpath .
