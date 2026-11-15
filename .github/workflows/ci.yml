@@ -32,3 +32,9 @@ jobs:
             time bb -e ':ok'
             time bb -e ':ok'
             time bb -e ':ok'
+
+            mount | grep linprocfs
+            umount /compat/linux/proc
+            mount | grep linprocfs
+            bb -e ':ok'
+            echo "bb exit code without linprocfs: $?"
